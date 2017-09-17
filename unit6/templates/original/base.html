@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TRAINING PORT</title>
+    <meta charset="utf-8"> 
+	
+
+    <!-- Add IntroJs styles -->
+    <link href="{{ request.script_root }}/static/{{ ctf_theme() }}/css/vendor/introjs.css" rel="stylesheet">
+    <link href="{{ request.script_root }}/static/{{ ctf_theme() }}/css/vendor/bootstrap-responsive.min.css" rel="stylesheet">
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{{ request.script_root }}/static/{{ ctf_theme() }}/img/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="{{ request.script_root }}/static/{{ ctf_theme() }}/img/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="{{ request.script_root }}/static/{{ ctf_theme() }}/css/vendor/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ request.script_root }}/static/{{ ctf_theme() }}/css/vendor/font-awesome/css/font-awesome.min.css" />
+    <link href='{{ request.script_root }}/static/{{ ctf_theme() }}/css/vendor/lato.css' rel='stylesheet' type='text/css'>
+    <link href='{{ request.script_root }}/static/{{ ctf_theme() }}/css/vendor/raleway.css' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="{{ request.script_root }}/static/{{ ctf_theme() }}/css/style.css">
+	
+    <link href="{{ request.script_root }}/introjs.css" rel="stylesheet">  
+    {% block stylesheets %}{% endblock %}
+    <script src="{{ request.script_root }}/static/{{ ctf_theme() }}/js/vendor/moment.min.js"></script>
+    <script src="{{ request.script_root }}/static/original/js/vendor/handlebars.min.js"></script>
+    <script type="text/javascript">
+        var script_root = "{{ request.script_root }}";
+    </script>
+</head>
+<body>
+  <div  class="body-container">
+    <div data-step="1" data-intro="It will show to user." class="navbar navbar-inverse home">
+      <div class="container">
+        <div class="navbar-header">
+          <button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse" type="button">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+		  </div>
+
+        <div class="navbar-collapse collapse" aria-expanded="false" style="height: 0px">
+          <ul class="nav navbar-nav">
+            {% for page in pages() %}
+              <li><a href="{{ request.script_root }}/{{ page.route }}">{{ page.route|title }}</a></li>
+            {% endfor %}
+            <li><a href="{{ request.script_root }}/teams">Teams</a></li>
+            {% if not hide_scores() %}
+            <li><a href="{{ request.script_root }}/scoreboard">Scoreboard</a></li>
+            {% endif %}
+
+            
+            <li><a href="{{ request.script_root }}/challenges">Challenges</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+          {% if username is defined %}
+            {% if admin %}
+            <li><a href="{{ request.script_root }}/admin">Admin</a></li>
+            {% endif %}
+            <li><a href="{{ request.script_root }}/team/{{ id }}">Team</a></li>
+            <li><a href="{{ request.script_root }}/profile">Profile</a></li>
+            <li><a href="{{ request.script_root }}/logout">Logout</a></li>
+          {% else %}
+            {% if can_register() %}
+            <li><a data-step="3" data-intro="Register now!" href="{{ request.script_root }}/register">Register</a></li>
+            <li><a style="padding-left:0px;padding-right:0px;">|</a></li>
+            {% endif %}
+    
+            <li><a data-step="2" data-intro="Login if you already have the account if not click next" href="{{ request.script_root }}/login">Login</a></li>
+          {% endif %}
+          </ul>
+        </div>
+      </div>
+    </div>
+    {% block content %}
+    
+    {% endblock %}
+	
+     <a id="startButton" class="btn btn-large btn-success" href="javascript:void(0);">Show me how</a>
+    
+  
+  
+  </div>
+  <script src="{{ request.script_root }}/static/{{ ctf_theme() }}/js/vendor/intro.min.js"></script>
+  <script src="{{ request.script_root }}/static/{{ ctf_theme() }}/js/vendor/jquery.min.js"></script>
+  <script src="{{ request.script_root }}/static/{{ ctf_theme() }}/js/vendor/marked.min.js"></script>
+  <script src="{{ request.script_root }}/static/{{ ctf_theme() }}/js/vendor/bootstrap.min.js"></script>
+  <script src="{{ request.script_root }}/intro.js"></script>
+  <script type="text/javascript" src="{{ request.script_root }}/static/{{ ctf_theme() }}/js/vendor/intro.js"></script>
+    <script type="text/javascript">
+      document.getElementById('startButton').onclick = function() {
+        introJs().setOption('doneLabel', 'Next page').start().oncomplete(function() {
+          window.location.href = 'register?multipage=true';
+        });
+      };
+    </script>
+  {% block scripts %}
+  {% endblock %}
+  
+
+  
+loaderio-140be8f5326a612926b97029f4d6a586
+
+</body>
+</html>
